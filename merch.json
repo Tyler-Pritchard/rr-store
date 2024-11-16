@@ -1,0 +1,122 @@
+[
+    {
+        "name": "Forest Gothic Band Tee-M",
+        "description": "A soft cotton unisex t-shirt featuring Rob Rich's logo intertwined with a gothic-style Pacific Northwest forest design.",
+        "price": 25.00,
+        "stock": 150,
+        "category": "Apparel",
+        "imageUrl": "https://imgur.com/L1RZ47V"
+    },
+    {
+        "name": "Forest Gothic Band Tee-L",
+        "description": "A soft cotton unisex t-shirt featuring Rob Rich's logo intertwined with a gothic-style Pacific Northwest forest design.",
+        "price": 25.00,
+        "stock": 150,
+        "category": "Apparel",
+        "imageUrl": "https://imgur.com/QZceR5g"
+    },
+    {
+        "name": "Dark Folk Hoodie",
+        "description": "A cozy black hoodie with a detailed illustration of a raven perched on a branch, representing the folk-punk spirit of Rob Rich.",
+        "price": 50.00,
+        "stock": 100,
+        "category": "Apparel",
+        "imageUrl": "https://imgur.com/c3Rx330"
+    },
+    {
+        "name": "Tacoma Trucker Hat",
+        "description": "A rugged trucker hat featuring Rob Rich's logo and a subtle pine tree pattern embroidered on the side.",
+        "price": 20.00,
+        "stock": 75,
+        "category": "Apparel",
+        "imageUrl": "https://imgur.com/Khb96tJ"
+    },
+    {
+        "name": "Tour Guitar Pick Set",
+        "description": "A set of 5 collectible guitar picks with designs inspired by Rob Rich's tour artwork and album covers.",
+        "price": 12.00,
+        "stock": 200,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/r7pu1eo"
+    },
+    {
+        "name": "Northwest Totem Keychain",
+        "description": "A metal keychain featuring a stylized bear and salmon totem design and Rob Rich's logo engraved on the back.",
+        "price": 10.00,
+        "stock": 150,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/BQ7TXpf"
+    },
+    {
+        "name": "Vintage Canvas Tote Bag",
+        "description": "A sturdy tote bag with a vintage-inspired Rob Rich logo and illustrations of native plants.",
+        "price": 18.00,
+        "stock": 100,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/pNk727p"
+    },
+    {
+        "name": "Beer Cozy A",
+        "description": "A foam beer cozy featuring a bold gothic font Rob Rich logo and illustrations of pine trees and ravens.",
+        "price": 5.00,
+        "stock": 300,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/qHv3YzA"
+    },
+    {
+        "name": "Beer Cozy B",
+        "description": "A foam beer cozy featuring a bold gothic font Rob Rich logo and illustrations of pine trees and ravens.",
+        "price": 5.00,
+        "stock": 300,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/s2rNV8r"
+    },
+    {
+        "name": "Pack of Disposable Lighters",
+        "description": "A pack of 5 lighters, each with a unique design inspired by Rob Rich’s album art and tour themes.",
+        "price": 15.00,
+        "stock": 200,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/IO4Eb73"
+    },
+    {
+        "name": "Bottle Opener",
+        "description": "A sleek black metal bottle opener featuring an engraved Rob Rich logo and a subtle raven motif.",
+        "price": 8.00,
+        "stock": 150,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/G0M1xEW"
+    },
+    {
+        "name": "Stocking Cap",
+        "description": "A warm black stocking cap with Rob Rich's embroidered logo in white and a subtle pine tree design on the side.",
+        "price": 20.00,
+        "stock": 120,
+        "category": "Apparel",
+        "imageUrl": "https://imgur.com/ML8FHZv"
+    },
+    {
+        "name": "10-Pack of Vinyl Stickers",
+        "description": "A pack of 5 vinyl stickers with detailed designs inspired by Rob Rich’s gothic folk aesthetic.",
+        "price": 10.00,
+        "stock": 500,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/1v3zs7o"
+    },
+    {
+        "name": "Lapel Pin A",
+        "description": "A high-quality enamel lapel pin featuring a detailed raven design and the Rob Rich logo in gothic font.",
+        "price": 12.00,
+        "stock": 100,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/Gy6we3x"
+    },
+    {
+        "name": "Lapel Pin B",
+        "description": "A high-quality enamel lapel pin featuring a detailed raven design and the Rob Rich logo in gothic font.",
+        "price": 12.00,
+        "stock": 100,
+        "category": "Accessories",
+        "imageUrl": "https://imgur.com/Cesjf9v"
+    }
+]

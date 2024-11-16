@@ -1,13 +1,12 @@
-package com.example.rr_store;
+package com.rr_store;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RrStoreApplicationTests {
+public class RrStoreApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void contextLoads() {
+    }
 }
