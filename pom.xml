@@ -61,6 +61,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Spring Security Testing -->
@@ -69,23 +75,31 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Jackson, a popular JSON library, so they say!-->
+
+        <!-- Jackson Databind for JSON Processing -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-        <!-- JavaX Annotation-->
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-        <!-- Jakarta Bean Validation-->
+
+        <!-- Jakarta Bean Validation -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <version>3.0.2</version>
-        </dependency>                
+        </dependency>
+
+        <!-- Hibernate Validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <!-- Java Persistence API (if needed for additional flexibility) -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

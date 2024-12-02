@@ -2,62 +2,102 @@ package com.rr.store.controller;
 
 import com.rr.store.model.Cart;
 import com.rr.store.model.CartItem;
-import com.rr.store.repository.CartRepository;
+import com.rr.store.model.Product;
 import com.rr.store.repository.ProductRepository;
-import com.rr.store.exception.ResourceNotFoundException;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
 
-    private final CartRepository cartRepository;
     private final ProductRepository productRepository;
 
-    @Autowired
-    public CartController(CartRepository cartRepository, ProductRepository productRepository) {
-        this.cartRepository = cartRepository;
+    public CartController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    // Fetch the current cart
     @GetMapping
-    public ResponseEntity<Cart> getCart() {
-        Cart cart = cartRepository.findById(1L) // Temporary cart ID for simplicity
-            .orElse(new Cart());
+    public ResponseEntity<Cart> getCart(HttpSession session) {
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new Cart();
+            session.setAttribute("cart", cart);
+            System.out.println("New cart initialized and added to session.");
+        } else {
+            System.out.println("Cart retrieved from session: " + cart);
+        }
         return ResponseEntity.ok(cart);
     }
 
-    // Add an item to the cart
     @PostMapping("/{productId}")
-    public ResponseEntity<Cart> addItemToCart(@PathVariable Long productId, @RequestParam int quantity) {
-        Cart cart = cartRepository.findById(1L).orElse(new Cart());
-        productRepository.findById(productId).ifPresent(product -> {
+    public ResponseEntity<Cart> addItemToCart(
+            @PathVariable Long productId,
+            @RequestParam int quantity,
+            HttpSession session) {
+
+        if (quantity <= 0) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new Cart();
+            session.setAttribute("cart", cart);
+        }
+
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        Product product = optionalProduct.get();
+        boolean itemExists = false;
+        for (CartItem item : cart.getItems()) {
+            if (item.getProduct().getId().equals(productId)) {
+                item.setQuantity(item.getQuantity() + quantity);
+                itemExists = true;
+                break;
+            }
+        }
+
+        if (!itemExists) {
             CartItem cartItem = new CartItem(product, quantity);
             cart.addItem(cartItem);
-        });
-        cartRepository.save(cart);
+        }
+
+        session.setAttribute("cart", cart); // Ensure the updated cart is saved back to the session
+        System.out.println("Cart updated: " + cart);
         return ResponseEntity.ok(cart);
     }
 
-    // Remove an item from the cart
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Cart> removeItemFromCart(@PathVariable Long productId) {
-        Cart cart = cartRepository.findById(1L).orElse(new Cart());
+    public ResponseEntity<Cart> removeItemFromCart(
+            @PathVariable Long productId,
+            HttpSession session) {
+
+        // Retrieve cart from session
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart == null) {
+            return ResponseEntity.ok(new Cart()); // Return empty cart if session is empty
+        }
+
+        // Remove the item from the cart
         cart.removeItem(productId);
-        cartRepository.save(cart);
+
+        // Update session
+        session.setAttribute("cart", cart);
         return ResponseEntity.ok(cart);
     }
 
-    // Clear the cart
-    @DeleteMapping
-    public ResponseEntity<Void> clearCart() {
-        cartRepository.deleteAll();
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/clear")
+    public ResponseEntity<Cart> clearCart(HttpSession session) {
+        // Clear the cart
+        Cart cart = new Cart();
+        session.setAttribute("cart", cart);
+        return ResponseEntity.ok(cart);
     }
 }
