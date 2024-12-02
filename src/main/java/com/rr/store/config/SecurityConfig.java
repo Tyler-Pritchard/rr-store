@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableMethodSecurity // Use the modern @EnableMethodSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -17,7 +17,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity (enable for production)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/products", "/api/cart/**").permitAll() // Publicly accessible endpoints
+                .requestMatchers("/api/products/**").permitAll() // Publicly accessible endpoints for products
+                .requestMatchers("/api/cart/**").permitAll() // Publicly accessible endpoints for cart operations
                 .requestMatchers("/api/admin/**").hasRole("ADMIN") // Admin endpoints require ADMIN role
                 .anyRequest().authenticated() // All other requests require authentication
             )

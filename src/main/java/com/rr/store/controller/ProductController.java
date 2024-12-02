@@ -1,8 +1,8 @@
 package com.rr.store.controller;
 
+import com.rr.store.exception.ResourceNotFoundException;
 import com.rr.store.model.Product;
 import com.rr.store.repository.ProductRepository;
-import com.rr.store.exception.ResourceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +30,14 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return ResponseEntity.ok(products);
+    }
+
+    // Public endpoint for fetching a single product by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+        return ResponseEntity.ok(product);
     }
 
     // Admin-only endpoint to create a new product
