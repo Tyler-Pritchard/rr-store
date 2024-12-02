@@ -6,6 +6,7 @@ import com.rr.store.exception.ResourceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,13 +25,16 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
+    // Public endpoint for fetching all products (unauthenticated)
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return ResponseEntity.ok(products);
     }
 
+    // Admin-only endpoint to create a new product
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')") // Requires the user to be an admin
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product,
                                                  UriComponentsBuilder uriComponentsBuilder) {
         Product savedProduct = productRepository.save(product);
@@ -40,7 +44,9 @@ public class ProductController {
         return ResponseEntity.created(location).body(savedProduct);
     }
 
+    // Admin-only endpoint to update product details
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')") // Requires the user to be an admin
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody Product productDetails) {
         return productRepository.findById(id)
             .map(product -> {
@@ -56,7 +62,9 @@ public class ProductController {
             .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
     }
 
+    // Admin-only endpoint to delete a product
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')") // Requires the user to be an admin
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         return productRepository.findById(id)
             .map(product -> {

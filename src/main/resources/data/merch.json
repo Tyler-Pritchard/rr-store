@@ -5,7 +5,7 @@
         "price": 25.00,
         "stock": 150,
         "category": "Apparel",
-        "imageUrl": "https://imgur.com/L1RZ47V"
+        "imageUrl": "https://i.imgur.com/L1RZ47V.jpg"
     },
     {
         "name": "Forest Gothic Band Tee-L",
@@ -13,7 +13,7 @@
         "price": 25.00,
         "stock": 150,
         "category": "Apparel",
-        "imageUrl": "https://imgur.com/QZceR5g"
+        "imageUrl": "https://i.imgur.com/QZceR5g.jpg"
     },
     {
         "name": "Dark Folk Hoodie",
@@ -21,7 +21,7 @@
         "price": 50.00,
         "stock": 100,
         "category": "Apparel",
-        "imageUrl": "https://imgur.com/c3Rx330"
+        "imageUrl": "https://i.imgur.com/c3Rx330.jpg"
     },
     {
         "name": "Tacoma Trucker Hat",
@@ -29,7 +29,7 @@
         "price": 20.00,
         "stock": 75,
         "category": "Apparel",
-        "imageUrl": "https://imgur.com/Khb96tJ"
+        "imageUrl": "https://i.imgur.com/Khb96tJ.jpg"
     },
     {
         "name": "Tour Guitar Pick Set",
@@ -37,7 +37,7 @@
         "price": 12.00,
         "stock": 200,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/r7pu1eo"
+        "imageUrl": "https://i.imgur.com/r7pu1eo.jpg"
     },
     {
         "name": "Northwest Totem Keychain",
@@ -45,7 +45,7 @@
         "price": 10.00,
         "stock": 150,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/BQ7TXpf"
+        "imageUrl": "https://i.imgur.com/BQ7TXpf.jpg"
     },
     {
         "name": "Vintage Canvas Tote Bag",
@@ -53,7 +53,7 @@
         "price": 18.00,
         "stock": 100,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/pNk727p"
+        "imageUrl": "https://i.imgur.com/pNk727p.jpg"
     },
     {
         "name": "Beer Cozy A",
@@ -61,7 +61,7 @@
         "price": 5.00,
         "stock": 300,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/qHv3YzA"
+        "imageUrl": "https://i.imgur.com/qHv3YzA.jpg"
     },
     {
         "name": "Beer Cozy B",
@@ -69,7 +69,7 @@
         "price": 5.00,
         "stock": 300,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/s2rNV8r"
+        "imageUrl": "https://i.imgur.com/s2rNV8r.jpg"
     },
     {
         "name": "Pack of Disposable Lighters",
@@ -77,7 +77,7 @@
         "price": 15.00,
         "stock": 200,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/IO4Eb73"
+        "imageUrl": "https://i.imgur.com/IO4Eb73.jpg"
     },
     {
         "name": "Bottle Opener",
@@ -85,7 +85,7 @@
         "price": 8.00,
         "stock": 150,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/G0M1xEW"
+        "imageUrl": "https://i.imgur.com/G0M1xEW.jpg"
     },
     {
         "name": "Stocking Cap",
@@ -93,7 +93,7 @@
         "price": 20.00,
         "stock": 120,
         "category": "Apparel",
-        "imageUrl": "https://imgur.com/ML8FHZv"
+        "imageUrl": "https://i.imgur.com/ML8FHZv.jpg"
     },
     {
         "name": "10-Pack of Vinyl Stickers",
@@ -101,7 +101,7 @@
         "price": 10.00,
         "stock": 500,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/1v3zs7o"
+        "imageUrl": "https://i.imgur.com/1v3zs7o.jpg"
     },
     {
         "name": "Lapel Pin A",
@@ -109,7 +109,7 @@
         "price": 12.00,
         "stock": 100,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/Gy6we3x"
+        "imageUrl": "https://i.imgur.com/Gy6we3x.jpg"
     },
     {
         "name": "Lapel Pin B",
@@ -117,6 +117,6 @@
         "price": 12.00,
         "stock": 100,
         "category": "Accessories",
-        "imageUrl": "https://imgur.com/Cesjf9v"
+        "imageUrl": "https://i.imgur.com/Cesjf9v.jpg"
     }
 ]
