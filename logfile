@@ -1,0 +1,78 @@
+2024-12-02 12:41:49.953 PST [21742] LOG:  starting PostgreSQL 14.14 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2024-12-02 12:41:49.955 PST [21742] LOG:  could not bind IPv6 address "::1": Address already in use
+2024-12-02 12:41:49.955 PST [21742] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:41:49.955 PST [21742] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2024-12-02 12:41:49.955 PST [21742] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:41:49.955 PST [21742] WARNING:  could not create listen socket for "localhost"
+2024-12-02 12:41:49.955 PST [21742] FATAL:  could not create any TCP/IP sockets
+2024-12-02 12:41:49.956 PST [21742] LOG:  database system is shut down
+2024-12-02 12:41:56.489 PST [21824] LOG:  starting PostgreSQL 14.14 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2024-12-02 12:41:56.490 PST [21824] LOG:  could not bind IPv6 address "::1": Address already in use
+2024-12-02 12:41:56.490 PST [21824] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:41:56.490 PST [21824] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2024-12-02 12:41:56.490 PST [21824] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:41:56.490 PST [21824] WARNING:  could not create listen socket for "localhost"
+2024-12-02 12:41:56.490 PST [21824] FATAL:  could not create any TCP/IP sockets
+2024-12-02 12:41:56.491 PST [21824] LOG:  database system is shut down
+2024-12-02 12:42:17.395 PST [21984] LOG:  starting PostgreSQL 14.14 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2024-12-02 12:42:17.396 PST [21984] LOG:  could not bind IPv6 address "::1": Address already in use
+2024-12-02 12:42:17.396 PST [21984] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:42:17.396 PST [21984] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2024-12-02 12:42:17.396 PST [21984] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:42:17.396 PST [21984] WARNING:  could not create listen socket for "localhost"
+2024-12-02 12:42:17.396 PST [21984] FATAL:  could not create any TCP/IP sockets
+2024-12-02 12:42:17.397 PST [21984] LOG:  database system is shut down
+2024-12-02 12:44:06.095 PST [22780] LOG:  starting PostgreSQL 14.14 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2024-12-02 12:44:06.097 PST [22780] LOG:  could not bind IPv6 address "::1": Address already in use
+2024-12-02 12:44:06.097 PST [22780] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:44:06.097 PST [22780] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2024-12-02 12:44:06.097 PST [22780] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:44:06.097 PST [22780] WARNING:  could not create listen socket for "localhost"
+2024-12-02 12:44:06.097 PST [22780] FATAL:  could not create any TCP/IP sockets
+2024-12-02 12:44:06.098 PST [22780] LOG:  database system is shut down
+2024-12-02 12:46:37.246 PST [24492] LOG:  starting PostgreSQL 14.14 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2024-12-02 12:46:37.248 PST [24492] LOG:  could not bind IPv6 address "::1": Address already in use
+2024-12-02 12:46:37.248 PST [24492] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:46:37.248 PST [24492] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2024-12-02 12:46:37.248 PST [24492] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2024-12-02 12:46:37.248 PST [24492] WARNING:  could not create listen socket for "localhost"
+2024-12-02 12:46:37.248 PST [24492] FATAL:  could not create any TCP/IP sockets
+2024-12-02 12:46:37.249 PST [24492] LOG:  database system is shut down
+2024-12-02 12:52:55.194 PST [27760] LOG:  starting PostgreSQL 14.14 (Homebrew) on x86_64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2024-12-02 12:52:55.195 PST [27760] LOG:  listening on IPv6 address "::1", port 5432
+2024-12-02 12:52:55.195 PST [27760] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-12-02 12:52:55.196 PST [27760] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-12-02 12:52:55.201 PST [27761] LOG:  database system was shut down at 2024-12-02 12:46:37 PST
+2024-12-02 12:52:55.204 PST [27760] LOG:  database system is ready to accept connections
+2024-12-02 13:34:03.613 PST [43861] FATAL:  role "${SPRING_DATASOURCE_USERNAME}" does not exist
+2024-12-02 13:34:04.789 PST [43871] FATAL:  role "${SPRING_DATASOURCE_USERNAME}" does not exist
+2024-12-02 13:44:44.025 PST [48461] FATAL:  role "postgres" does not exist
+2024-12-02 13:48:23.757 PST [50250] FATAL:  database "tylerpritchard" does not exist
+2024-12-02 13:49:07.077 PST [50545] FATAL:  role "postgres" does not exist
+2024-12-02 13:49:19.667 PST [50650] FATAL:  database "tylerpritchard" does not exist
+2024-12-02 13:50:43.304 PST [51496] FATAL:  database "tylerpritchard" does not exist
+2024-12-02 13:55:58.117 PST [55378] FATAL:  database "tylerpritchard" does not exist
+2024-12-02 13:59:03.594 PST [27760] LOG:  background worker "logical replication launcher" (PID 27767) was terminated by signal 9: Killed: 9
+2024-12-02 13:59:03.594 PST [27760] LOG:  terminating any other active server processes
+2024-12-02 13:59:03.636 PST [27760] LOG:  all server processes terminated; reinitializing
+2024-12-02 13:59:03.645 PST [56987] LOG:  database system was interrupted; last known up at 2024-12-02 12:57:55 PST
+2024-12-02 13:59:03.689 PST [56987] LOG:  database system was not properly shut down; automatic recovery in progress
+2024-12-02 13:59:03.690 PST [56987] LOG:  redo starts at 0/172BA50
+2024-12-02 13:59:03.690 PST [56987] LOG:  invalid record length at 0/172BB38: wanted 24, got 0
+2024-12-02 13:59:03.690 PST [56987] LOG:  redo done at 0/172BB00 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2024-12-02 13:59:03.696 PST [27760] LOG:  database system is ready to accept connections
+2024-12-02 13:59:31.169 PST [27760] LOG:  background worker "logical replication launcher" (PID 57000) was terminated by signal 9: Killed: 9
+2024-12-02 13:59:31.169 PST [27760] LOG:  terminating any other active server processes
+2024-12-02 13:59:31.171 PST [27760] LOG:  all server processes terminated; reinitializing
+2024-12-02 13:59:31.214 PST [57296] LOG:  database system was interrupted; last known up at 2024-12-02 13:59:03 PST
+2024-12-02 13:59:31.250 PST [57296] LOG:  database system was not properly shut down; automatic recovery in progress
+2024-12-02 13:59:31.251 PST [57296] LOG:  redo starts at 0/172BBB0
+2024-12-02 13:59:31.252 PST [57296] LOG:  invalid record length at 0/172BBE8: wanted 24, got 0
+2024-12-02 13:59:31.252 PST [57296] LOG:  redo done at 0/172BBB0 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2024-12-02 13:59:31.257 PST [27760] LOG:  database system is ready to accept connections
+2024-12-02 14:02:31.260 PST [27760] LOG:  could not open file "postmaster.pid": No such file or directory
+2024-12-02 14:02:31.260 PST [27760] LOG:  performing immediate shutdown because data directory lock file is invalid
+2024-12-02 14:02:31.260 PST [27760] LOG:  received immediate shutdown request
+2024-12-02 14:02:31.260 PST [27760] LOG:  could not open file "postmaster.pid": No such file or directory
+2024-12-02 14:02:31.261 PST [57308] LOG:  could not open temporary statistics file "pg_stat/global.tmp": No such file or directory
+2024-12-02 14:02:31.262 PST [27760] LOG:  database system is shut down
