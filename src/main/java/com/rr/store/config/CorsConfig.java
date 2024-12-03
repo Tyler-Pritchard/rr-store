@@ -15,7 +15,14 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**") // Allow all endpoints
-                        .allowedOrigins("http://localhost:3000") // Allow frontend origin
+                        .allowedOrigins(
+                                "https://rrsite.vercel.app", // Production frontend
+                                "https://www.robrich.band",  // Production domain
+                                "https://rr-auth-production.up.railway.app", // Auth service
+                                "https://rr-store-production.up.railway.app", // This service
+                                "http://localhost:3000", // Development frontend
+                                "http://localhost:8080"  // Other local services
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow HTTP methods
                         .allowedHeaders("*") // Allow all headers
                         .allowCredentials(true); // Allow cookies and credentials
