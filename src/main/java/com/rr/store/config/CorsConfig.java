@@ -23,8 +23,12 @@ public class CorsConfig {
                                 "http://localhost:3000", // Development frontend
                                 "http://localhost:8080"  // Other local services
                         )
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allow HTTP methods
-                        .allowedHeaders("*") // Allow all headers
+                        .allowedMethods(
+                                "GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD" // Allow HTTP methods
+                        )
+                        .allowedHeaders(
+                                "Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin", "Access-Control-Allow-Origin"
+                        )
                         .allowCredentials(true); // Allow cookies and credentials
             }
         };
