@@ -14,22 +14,28 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
-                registry.addMapping("/**") // Allow all endpoints
-                        .allowedOrigins(
-                                "https://rrsite.vercel.app", // Production frontend
-                                "https://www.robrich.band",  // Production domain
-                                "https://rr-auth-production.up.railway.app", // Auth service
-                                "https://rr-store-production.up.railway.app", // This service
-                                "http://localhost:3000", // Development frontend
-                                "http://localhost:8080"  // Other local services
-                        )
+                String allowedOriginsEnv = System.getenv("ALLOWED_ORIGINS");
+                String[] allowedOrigins = allowedOriginsEnv != null 
+                        ? allowedOriginsEnv.split(",") 
+                        : new String[]{
+                            "https://rrsite.vercel.app", 
+                            "https://www.robrich.band",  
+                            "https://rr-auth-production.up.railway.app", 
+                            "https://rr-store-production.up.railway.app", 
+                            "http://localhost:3000", 
+                            "http://localhost:8080"
+                        };
+
+                registry.addMapping("/**")
+                        .allowedOrigins(allowedOrigins)
                         .allowedMethods(
-                                "GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD" // Allow HTTP methods
+                                "GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"
                         )
                         .allowedHeaders(
                                 "Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin", "Access-Control-Allow-Origin"
                         )
-                        .allowCredentials(true); // Allow cookies and credentials
+                        .exposedHeaders("Access-Control-Allow-Origin")
+                        .allowCredentials(true);
             }
         };
     }
