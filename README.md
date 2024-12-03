@@ -2,177 +2,147 @@
 
 ## Overview
 
-The E-Store Microservice is a backend service designed to handle product catalog management for an enterprise-grade e-commerce platform. Built with Spring Boot, it provides RESTful APIs for product browsing, searching, filtering, and CRUD operations. It is designed following modern microservice architecture principles, ensuring scalability, maintainability, and performance.
+The E-Store Microservice is a backend service engineered for enterprise-grade e-commerce platforms. It facilitates efficient product catalog management, leveraging Spring Boot to provide robust, secure, and scalable RESTful APIs. The service adheres to modern microservice architecture principles, ensuring high maintainability and performance.
 
 ## Features
 
-- **Product Management**: Create, read, update, and delete product records.
-- **Catalog Browsing**: Fetch all products with pagination support.
-- **Advanced Search**: Filter products by attributes such as name, category, and price range.
-- **Validation**: Ensures data integrity through robust input validation.
-- **Error Handling**: Provides consistent and informative API error responses.
-- **Security**: Uses Spring Security for securing API endpoints with authentication and authorization.
-- **Database Integration**: PostgreSQL for production and H2 for local development and testing.
+### Core Capabilities
+
+- **Product Management**: Full CRUD operations for product records.
+- **Catalog Browsing**: Retrieve products with advanced filtering and pagination.
+- **Search and Filtering**: Query products by name, category, price range, and stock levels.
+- **Error Handling**: Consistent and structured API responses for predictable client behavior.
+- **Security**: Role-based access control and authentication with Spring Security.
+- **Database Integration**: Supports PostgreSQL for production and H2 for testing and local development.
+
+### Design Principles
+
+- **Scalability**: Built with a microservice-first approach to support horizontal scaling.
+- **Testability**: Comprehensive unit and integration test coverage with JUnit and Mockito.
+- **Performance**: Optimized queries and database interactions with Hibernate.
+
+## Technology Stack
+- **Framework**: Spring Boot (v3.3.6)
+- **Language**: Java 17
+- **Database**: PostgreSQL (production), H2 (development/testing)
+- **Build Tool**: Maven
+- **Testing Frameworks**: JUnit 5, Mockito
+- **Security**: Spring Security with role-based access control
+- **Serialization**: Jackson (JSON processing)
+- **Utilities**: Lombok for code reduction, Hibernate for ORM
+
+## API Documentation
+
+**Base URL**: ``http://localhost:8080/api/products``
+
+### Endpoints
+HTTP Method	| Endpoint	| Description	| Authentication	| Example Status
+- GET	``/api/products``	Fetch all products	Public	``200 OK``
+- POST	``/api/products``	Create a new product	Admin	``201 Created``
+- GET	``/api/products/{id}``	Fetch a product by ID	Public	``200 OK``
+- PUT	``/api/products/{id}``	Update an existing product by ID	Admin	``200 OK``
+- DELETE	``/api/products/{id}``	Delete a product by ID	Admin	``204 No Content``
+
+For detailed request/response payloads, see the [API Reference](#api-documentation).
 
 ## Project Structure
-
-The service follows a clean and modular structure for ease of development and testing:
-
 ```
 src/
 ├── main/
 │   ├── java/com/rr/store/
-│   │   ├── controller/     # REST controllers for API endpoints
-│   │   ├── model/          # Entity definitions
-│   │   ├── repository/     # JPA repositories for data access
-│   │   ├── service/        # Business logic and data processing
-│   │   └── exception/      # Custom exception handling
+│   │   ├── controller/     # RESTful API controllers
+│   │   ├── domain/         # Business domain models
+│   │   ├── service/        # Business logic services
+│   │   ├── repository/     # JPA repositories
+│   │   ├── config/         # Security and application configurations
+│   │   └── exception/      # Custom exception handlers
 │   ├── resources/
-│       ├── application.properties # Configuration for environments
-│       ├── data/merch.json         # Sample product data
-│       └── static/                 # Static resources
+│       ├── application.yml          # Consolidated configuration
+│       ├── data/merch.json          # Sample product data
 └── test/
-    ├── java/com/rr/store/          # Unit and integration tests
+    ├── java/com/rr/store/           # Unit and integration tests
 ```
 
-## Technology Stack
-
-- **Framework**: Spring Boot 3.3.5
-- **Programming Language**: Java 17
-- **Database**: PostgreSQL (H2 for local testing)
-- **Build Tool**: Maven
-- **Testing Frameworks**: JUnit 5, Mockito
-- **Dependency Management**: Spring Data JPA, Spring Security, Lombok, Hibernate
-
-## API Documentation
-
-### Base URL
-
-`http://localhost:8080/api/products`
-
-### Endpoints
-
-**GET** `/api/products`
-Fetches all products.
-
-- **Response**: 200 OK
-- **Example Response**:
-```
-[
-  {
-    "id": 1,
-    "name": "T-shirt",
-    "description": "Comfortable cotton T-shirt",
-    "price": 19.99,
-    "stock": 50,
-    "category": "Clothing",
-    "imageUrl": "http://example.com/image.jpg"
-  }
-]
-```
-
-**POST** `/api/products`
-Creates a new product.
-
-- **Request Body**:
-```
-{
-  "name": "T-shirt",
-  "description": "Comfortable cotton T-shirt",
-  "price": 19.99,
-  "stock": 50,
-  "category": "Clothing",
-  "imageUrl": "http://example.com/image.jpg"
-}
-```
-
-- **Response**: `201 Created`
-**PUT** `/api/products/{id}`
-Updates an existing product by ID.
-
-**Request Body**:
-```
-{
-  "name": "Updated T-shirt",
-  "description": "Updated description",
-  "price": 24.99,
-  "stock": 30,
-  "category": "Clothing",
-  "imageUrl": "http://example.com/new-image.jpg"
-}
-```
-- **Response**: `200 OK`
-  
-**DELETE** `/api/products/{id}`
-Deletes a product by ID.
-
-- **Response**: `204 No Content`
-
-## How to Run Locally
+## Local Development
 
 ### Prerequisites
 - Java 17 or higher
 - Maven
-- PostgreSQL
+- PostgreSQL (for production)
 
-### Steps
+### Setup
 1. **Clone the Repository**:
+
 ```
 git clone https://github.com/username/e-store-microservice.git
 cd e-store-microservice
 ```
 
-2. **Set Up Database**:
+1. **Run the Application:**
 
-- Ensure PostgreSQL is running.
-- Update `application.properties` with your PostgreSQL credentials.
-
-3. **Run the Application**:
+- Use the development profile:
 ```
-./mvnw spring-boot:run
+./mvnw spring-boot:run -Dspring.profiles.active=dev
 ```
 
-4. **Access the API**:
+3. **Access the API**:
 
-- Swagger UI (if enabled): `http://localhost:8080/swagger-ui.html`
-- API Endpoints: `http://localhost:8080/api/products`
-
-## Testing
-
-Run unit and integration tests:
+- Base URL: ``http://localhost:8080/api/products``
+- Swagger (if enabled): ``http://localhost:8080/swagger-ui.html``
+  
+4. **Run Tests**:
 ```
 ./mvnw test
 ```
 
-Test coverage includes:
-
-- Validation of API inputs and outputs
-- Business logic in service layer
-- Database interaction using in-memory H2
-
 ## Deployment
 
-### Docker
+### Railway Deployment
+- Configure environment variables:
 
-A `Dockerfile` can be added to containerize the application. Example:
+``DB_HOST``, ``DB_USERNAME``, ``DB_PASSWORD``, and ``SPRING_PROFILES_ACTIVE=prod``.
+
+- Deployment command:
+```
+mvn package
+java -jar target/rr-store-0.0.1-SNAPSHOT.jar
+```
+
+### Docker Deployment
+
+- Sample ``Dockerfile``:
 ```
 FROM openjdk:17-jdk-slim
 COPY target/rr-store-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 ```
 
-### CI/CD Integration
-The project supports integration with GitHub Actions or Jenkins for build, test, and deploy pipelines.
+## Testing
+
+### Test Coverage
+
+- **Unit Tests**:
+  - Validates core service logic and data transformations.
+- **Integration Tests**:
+  - Covers database operations and API endpoints with in-memory H2 database.
+
+### Commands
+
+Run all tests:
+```
+./mvnw test
+```
 
 ## Future Enhancements
-- Implement rate limiting for public API endpoints.
-- Add support for GraphQL for flexible querying.
-- Introduce caching for frequently accessed data.
-- Integrate a monitoring tool (e.g., Prometheus/Grafana) for observability.
+
+- Add GraphQL support for flexible querying.
+- Implement rate limiting for enhanced security.
+- Introduce caching mechanisms (e.g., Redis) for frequently accessed data.
+- Add monitoring and observability tools (e.g., Prometheus, Grafana).
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
 
-## Acknowledgements
-Special thanks to the contributors and the open-source community for their valuable libraries and tools.
+## Contact and Support
 
+For questions or support, contact pritchard.tyler@gmail.com.

@@ -9,34 +9,44 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig {
 
+    private static final String[] DEFAULT_ALLOWED_ORIGINS = {
+        "https://rrsite.vercel.app",
+        "https://www.robrich.band",
+        "https://rr-auth-production.up.railway.app",
+        "https://rr-store-production.up.railway.app",
+        "http://localhost:3000",
+        "http://localhost:8080"
+    };
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
-                String allowedOriginsEnv = System.getenv("ALLOWED_ORIGINS");
-                String[] allowedOrigins = allowedOriginsEnv != null 
-                        ? allowedOriginsEnv.split(",") 
-                        : new String[]{
-                            "https://rrsite.vercel.app", 
-                            "https://www.robrich.band",  
-                            "https://rr-auth-production.up.railway.app", 
-                            "https://rr-store-production.up.railway.app", 
-                            "http://localhost:3000", 
-                            "http://localhost:8080"
-                        };
+                // Load allowed origins from environment or fallback to default
+                String[] allowedOrigins = getAllowedOrigins();
 
                 registry.addMapping("/**")
                         .allowedOrigins(allowedOrigins)
-                        .allowedMethods(
-                                "GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"
-                        )
-                        .allowedHeaders(
-                                "Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin", "Access-Control-Allow-Origin"
-                        )
-                        .exposedHeaders("Access-Control-Allow-Origin")
-                        .allowCredentials(true);
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
+                        .allowedHeaders("Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin")
+                        .exposedHeaders("Authorization")
+                        .allowCredentials(true)
+                        .maxAge(3600); // Cache preflight requests for 1 hour
             }
         };
+    }
+
+    /**
+     * Retrieves allowed origins from the environment or uses defaults.
+     * 
+     * @return Array of allowed origins
+     */
+    private String[] getAllowedOrigins() {
+        String allowedOriginsEnv = System.getenv("ALLOWED_ORIGINS");
+        if (allowedOriginsEnv != null && !allowedOriginsEnv.isBlank()) {
+            return allowedOriginsEnv.split(",");
+        }
+        return DEFAULT_ALLOWED_ORIGINS;
     }
 }

@@ -1,38 +1,53 @@
 package com.rr.store.controller;
 
-import com.rr.store.model.Cart;
-import com.rr.store.model.CartItem;
-import com.rr.store.model.Product;
-import com.rr.store.repository.ProductRepository;
+import com.rr.store.domain.model.Cart;
+import com.rr.store.domain.service.CartService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
+/**
+ * REST controller for managing the shopping cart.
+ * 
+ * Handles HTTP requests related to cart operations and delegates
+ * business logic to the CartService.
+ */
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {
 
-    private final ProductRepository productRepository;
+    private final CartService cartService;
 
-    public CartController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    /**
+     * Constructor to inject dependencies.
+     * 
+     * @param cartService the service layer for cart-related operations
+     */
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
     }
 
+    /**
+     * Retrieves the current user's cart from the session.
+     * Initializes a new cart if none exists.
+     * 
+     * @param session the HTTP session
+     * @return the current cart
+     */
     @GetMapping
     public ResponseEntity<Cart> getCart(HttpSession session) {
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new Cart();
-            session.setAttribute("cart", cart);
-            System.out.println("New cart initialized and added to session.");
-        } else {
-            System.out.println("Cart retrieved from session: " + cart);
-        }
+        Cart cart = cartService.getCart(session);
         return ResponseEntity.ok(cart);
     }
 
+    /**
+     * Adds an item to the cart.
+     * 
+     * @param productId the ID of the product to add
+     * @param quantity the quantity of the product to add
+     * @param session the HTTP session
+     * @return the updated cart
+     */
     @PostMapping("/{productId}")
     public ResponseEntity<Cart> addItemToCart(
             @PathVariable Long productId,
@@ -40,64 +55,38 @@ public class CartController {
             HttpSession session) {
 
         if (quantity <= 0) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().build();
         }
 
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new Cart();
-            session.setAttribute("cart", cart);
-        }
-
-        Optional<Product> optionalProduct = productRepository.findById(productId);
-        if (optionalProduct.isEmpty()) {
-            return ResponseEntity.badRequest().body(null);
-        }
-
-        Product product = optionalProduct.get();
-        boolean itemExists = false;
-        for (CartItem item : cart.getItems()) {
-            if (item.getProduct().getId().equals(productId)) {
-                item.setQuantity(item.getQuantity() + quantity);
-                itemExists = true;
-                break;
-            }
-        }
-
-        if (!itemExists) {
-            CartItem cartItem = new CartItem(product, quantity);
-            cart.addItem(cartItem);
-        }
-
-        session.setAttribute("cart", cart); // Ensure the updated cart is saved back to the session
-        System.out.println("Cart updated: " + cart);
+        Cart cart = cartService.addItemToCart(session, productId, quantity);
         return ResponseEntity.ok(cart);
     }
 
+    /**
+     * Removes an item from the cart.
+     * 
+     * @param productId the ID of the product to remove
+     * @param session the HTTP session
+     * @return the updated cart
+     */
     @DeleteMapping("/{productId}")
     public ResponseEntity<Cart> removeItemFromCart(
             @PathVariable Long productId,
             HttpSession session) {
 
-        // Retrieve cart from session
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            return ResponseEntity.ok(new Cart()); // Return empty cart if session is empty
-        }
-
-        // Remove the item from the cart
-        cart.removeItem(productId);
-
-        // Update session
-        session.setAttribute("cart", cart);
+        Cart cart = cartService.removeItemFromCart(session, productId);
         return ResponseEntity.ok(cart);
     }
 
+    /**
+     * Clears all items from the cart.
+     * 
+     * @param session the HTTP session
+     * @return an empty cart
+     */
     @DeleteMapping("/clear")
     public ResponseEntity<Cart> clearCart(HttpSession session) {
-        // Clear the cart
-        Cart cart = new Cart();
-        session.setAttribute("cart", cart);
+        Cart cart = cartService.clearCart(session);
         return ResponseEntity.ok(cart);
     }
 }

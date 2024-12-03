@@ -1,84 +1,107 @@
 package com.rr.store.controller;
 
+import com.rr.store.domain.model.Product;
+import com.rr.store.domain.service.ProductService;
 import com.rr.store.exception.ResourceNotFoundException;
-import com.rr.store.model.Product;
-import com.rr.store.repository.ProductRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * REST controller for managing products.
+ * 
+ * Handles HTTP requests related to products and delegates
+ * business logic to the ProductService.
+ */
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    /**
+     * Constructor to inject dependencies.
+     * 
+     * @param productService the service layer for product-related operations
+     */
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
-    // Public endpoint for fetching all products (unauthenticated)
+    /**
+     * Retrieves all available products.
+     * 
+     * @return a list of all products
+     */
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productService.findAllProducts();
         return ResponseEntity.ok(products);
     }
 
-    // Public endpoint for fetching a single product by ID
+    /**
+     * Retrieves a single product by its ID.
+     * 
+     * @param id the ID of the product to retrieve
+     * @return the product with the given ID
+     * @throws ResourceNotFoundException if no product with the given ID is found
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = productRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+        Product product = productService.findProductById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
         return ResponseEntity.ok(product);
     }
 
-    // Admin-only endpoint to create a new product
+    /**
+     * Creates a new product.
+     * 
+     * @param product the product to create
+     * @param uriComponentsBuilder a utility to build the location URI
+     * @return the created product with its location URI
+     */
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')") // Requires the user to be an admin
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product,
                                                  UriComponentsBuilder uriComponentsBuilder) {
-        Product savedProduct = productRepository.save(product);
+        Product savedProduct = productService.createProduct(product);
         URI location = uriComponentsBuilder.path("/api/products/{id}")
                                            .buildAndExpand(savedProduct.getId())
                                            .toUri();
         return ResponseEntity.created(location).body(savedProduct);
     }
 
-    // Admin-only endpoint to update product details
+    /**
+     * Updates an existing product.
+     * 
+     * @param id the ID of the product to update
+     * @param productDetails the updated product details
+     * @return the updated product
+     * @throws ResourceNotFoundException if no product with the given ID is found
+     */
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')") // Requires the user to be an admin
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody Product productDetails) {
-        return productRepository.findById(id)
-            .map(product -> {
-                product.setName(productDetails.getName());
-                product.setDescription(productDetails.getDescription());
-                product.setPrice(productDetails.getPrice());
-                product.setStock(productDetails.getStock());
-                product.setCategory(productDetails.getCategory());
-                product.setImageUrl(productDetails.getImageUrl());
-                Product updatedProduct = productRepository.save(product);
-                return ResponseEntity.ok(updatedProduct);
-            })
-            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+        Product updatedProduct = productService.updateProduct(id, productDetails);
+        return ResponseEntity.ok(updatedProduct);
     }
 
-    // Admin-only endpoint to delete a product
+    /**
+     * Deletes a product by its ID.
+     * 
+     * @param id the ID of the product to delete
+     * @return a response indicating the product has been deleted
+     * @throws ResourceNotFoundException if no product with the given ID is found
+     */
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')") // Requires the user to be an admin
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        return productRepository.findById(id)
-            .map(product -> {
-                productRepository.deleteById(id);
-                return ResponseEntity.noContent().<Void>build();
-            })
-            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
     }
 }

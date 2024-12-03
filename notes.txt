@@ -1,0 +1,14 @@
+Ensure logging for exceptions is centralized and follows a consistent format (e.g., SLF4J with MDC for traceability).
+
+API Documentation
+Add OpenAPI/Swagger documentation for all endpoints. This makes the service easier to consume and review for external developers.
+8. Logging
+Centralize logging configuration (e.g., logback.xml or log4j2.xml).
+Use structured logging (e.g., JSON logs) for better observability in production.
+Ensure sensitive information (e.g., passwords) is never logged.
+
+
+Database Optimization:
+Use indexed queries in repositories to prevent performance bottlenecks.
+If possible, cache frequent queries (e.g., product listings) using Redis or a similar in-memory store.
+Fault Tolerance: Add resilience patterns like circuit breakers (via Resilience4j or Spring Cloud Circuit Breaker).
