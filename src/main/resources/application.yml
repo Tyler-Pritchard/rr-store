@@ -6,9 +6,9 @@ spring:
     name: rr-store
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: ${DB_USERNAME:default_user}
-    password: ${DB_PASSWORD:default_password}
-    url: jdbc:postgresql://localhost:5432/default_db
+    username: postgres
+    password: your_password
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:default_db}
   jpa:
     hibernate:
       ddl-auto: none
@@ -25,29 +25,37 @@ server:
 # ==================================================
 ---
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: test
-    password: test
+    url: jdbc:postgresql://localhost:5432/dev_database
+    username: postgres
+    password: your_password
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    root: DEBUG
+    "[com.rr.store]": INFO
 
 # ==================================================
 # Production Profile
 # ==================================================
 ---
 spring:
-  profiles: prod
+  config:
+    activate:
+      on-profile: prod
   datasource:
-    url: jdbc:postgresql://${DB_HOST:railway}/railway
-    username: ${DB_USERNAME}
+    url: jdbc:postgresql://${DB_HOST:railway}/${DB_NAME:prod_database}
+    username: ${DB_USER}
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
@@ -64,7 +72,9 @@ logging:
 # ==================================================
 ---
 spring:
-  profiles: test
+  config:
+    activate:
+      on-profile: test
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver

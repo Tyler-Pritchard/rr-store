@@ -1,82 +1,89 @@
 package com.rr.store.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rr.store.domain.model.Product;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
 
-/**
- * Integration tests for the ProductJsonReader.
- * 
- * Validates that products are correctly read from the JSON file and that
- * error handling works for missing or malformed files.
- */
-@SpringBootTest
-@ActiveProfiles("test") // Ensures test profile-specific properties are used
+@ActiveProfiles("test")
 public class ProductJsonReaderTests {
 
-    @Autowired
+    @Mock
+    private ObjectMapper objectMapper;
+
+    @InjectMocks
     private ProductJsonReader productJsonReader;
 
-    /**
-     * Tests that products are successfully read from the default JSON file.
-     * 
-     * Ensures the returned list is not null and contains at least one product.
-     * 
-     * @throws Exception if an error occurs during file reading
-     */
+    @Mock
+    private FileReaderService fileReaderService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    
+        // Configure the ObjectMapper mock
+        when(objectMapper.getTypeFactory())
+            .thenReturn(new ObjectMapper().getTypeFactory());
+    }
+
     @Test
-    void testReadProductsFromFile() throws Exception {
-        // Read products from the file
+    void testReadProductsFromFile() throws IOException {
+        String validJson = """
+            [
+                {
+                    "name": "Forest Gothic Band Tee-M",
+                    "description": "A soft cotton unisex t-shirt featuring Rob Rich's logo.",
+                    "price": 25.0,
+                    "stock": 150,
+                    "category": "Apparel",
+                    "imageUrl": "https://i.imgur.com/L1RZ47V.jpg"
+                }
+            ]
+        """;
+
+        when(fileReaderService.readJsonFile("src/main/resources/products.json")).thenReturn(validJson);
+        when(objectMapper.readValue(validJson, objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class)))
+            .thenReturn(Collections.singletonList(new Product(1L, "Forest Gothic Band Tee-M", "A soft cotton unisex t-shirt featuring Rob Rich's logo.", 25.0, 150, "Apparel", "https://i.imgur.com/L1RZ47V.jpg")));
+
         List<Product> products = productJsonReader.readProductsFromFile();
 
-        // Assertions
         assertThat(products).isNotNull();
-        assertThat(products).isNotEmpty();
-        assertThat(products.get(0).getName()).isNotBlank();
-
-        // Debugging output
-        System.out.println("Products loaded: " + products.size());
-        products.forEach(product -> System.out.println("Loaded product: " + product));
+        assertThat(products).hasSize(1);
+        assertThat(products.get(0).getId()).isEqualTo(1L); // Check the id
+        assertThat(products.get(0).getName()).isEqualTo("Forest Gothic Band Tee-M");
     }
 
-    /**
-     * Tests behavior when the JSON file is missing.
-     * 
-     * This test validates that an exception is thrown when the file cannot be found.
-     */
     @Test
-    void testFileNotFound() {
-        try {
-            // Temporarily simulate a missing file scenario
-            // This could be implemented by modifying the file path in the reader or mocking
-            List<Product> products = productJsonReader.readProductsFromFile(); // Simulate missing file
-            assertThat(products).isEmpty(); // This should fail in a real scenario
-        } catch (Exception e) {
-            assertThat(e).isInstanceOf(IllegalStateException.class);
-            assertThat(e.getMessage()).contains("Could not find");
-        }
+    void testFileNotFound() throws IOException {
+        when(fileReaderService.readJsonFile("src/main/resources/products.json"))
+            .thenThrow(new IllegalStateException("Could not find file"));
+
+        assertThatThrownBy(() -> productJsonReader.readProductsFromFile())
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining("Could not find file");
     }
 
-    /**
-     * Tests behavior when the JSON file is malformed.
-     * 
-     * Ensures that an appropriate exception is thrown when the file format is invalid.
-     */
     @Test
-    void testMalformedJsonFile() {
-        try {
-            // Simulate a malformed file scenario (requires mocking or file manipulation)
-            List<Product> products = productJsonReader.readProductsFromFile(); // Simulate malformed file
-            assertThat(products).isEmpty(); // This should fail in a real scenario
-        } catch (Exception e) {
-            assertThat(e).isInstanceOf(IllegalStateException.class);
-            assertThat(e.getMessage()).contains("Failed to read or parse products");
-        }
+    void testMalformedJsonFile() throws IOException {
+        String malformedJson = "[{name: 'missing_quotes']"; // Invalid JSON
+        when(fileReaderService.readJsonFile("src/main/resources/products.json")).thenReturn(malformedJson);
+        when(objectMapper.readValue(malformedJson, objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class)))
+            .thenThrow(new IOException("Malformed JSON"));
+
+        assertThatThrownBy(() -> productJsonReader.readProductsFromFile())
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining("Failed to read or parse products");
     }
 }

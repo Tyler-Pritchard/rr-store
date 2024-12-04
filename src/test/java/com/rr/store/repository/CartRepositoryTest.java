@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for the CartRepository.
- * 
+ *
  * Validates repository methods for managing Cart entities,
  * ensuring correct database interactions.
  */
@@ -22,10 +22,7 @@ public class CartRepositoryTest {
     private CartRepository cartRepository;
 
     /**
-     * Placeholder test to validate repository wiring.
-     * 
-     * Ensures that the CartRepository is correctly injected
-     * and can save entities.
+     * Validates the wiring of the CartRepository.
      */
     @Test
     public void testCartRepositoryLoads() {
@@ -33,17 +30,17 @@ public class CartRepositoryTest {
     }
 
     /**
-     * Example test case for saving and retrieving a cart.
-     * 
-     * This can be expanded in the future to include more complex scenarios.
+     * Validates saving and retrieving a Cart entity.
      */
     @Test
     public void testSaveAndRetrieveCart() {
         // Create a new Cart instance
         Cart cart = new Cart();
+        
+        // Save the cart entity
         Cart savedCart = cartRepository.save(cart);
-
-        // Assert that the saved cart can be retrieved by ID
+        
+        // Assert the ID is generated and the entity can be retrieved
         assertThat(savedCart.getId()).isNotNull();
         assertThat(cartRepository.findById(savedCart.getId())).isPresent();
     }

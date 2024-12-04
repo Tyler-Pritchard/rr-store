@@ -1,50 +1,41 @@
 package com.rr.store.util;
 
+import com.rr.store.domain.model.Product;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rr.store.domain.model.Product;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
- * Utility class for reading products from a JSON file.
- * 
- * Uses Jackson to parse a JSON file into a list of Product objects.
+ * A utility class for reading product data from a JSON file.
  */
 @Component
 public class ProductJsonReader {
 
-    private static final String DEFAULT_FILE_PATH = "/data/merch.json";
-
     private final ObjectMapper objectMapper;
+    private final FileReaderService fileReaderService;
 
-    /**
-     * Constructor to inject dependencies.
-     * 
-     * @param objectMapper the ObjectMapper used for JSON parsing
-     */
-    public ProductJsonReader(ObjectMapper objectMapper) {
+    @Autowired
+    public ProductJsonReader(ObjectMapper objectMapper, FileReaderService fileReaderService) {
         this.objectMapper = objectMapper;
+        this.fileReaderService = fileReaderService;
     }
 
     /**
-     * Reads products from a specified JSON file.
-     * 
-     * @return a list of Product objects
-     * @throws IllegalStateException if the file cannot be read or parsed
+     * Reads products from the JSON file and returns them as a list.
+     *
+     * @return a list of products
+     * @throws IllegalStateException if the file is missing or cannot be parsed
      */
     public List<Product> readProductsFromFile() {
-        try (InputStream is = getClass().getResourceAsStream(DEFAULT_FILE_PATH)) {
-            if (is == null) {
-                throw new IllegalStateException("Could not find the file at: " + DEFAULT_FILE_PATH);
-            }
-
-            return objectMapper.readValue(is, new TypeReference<List<Product>>() {});
-        } catch (Exception e) {
-            throw new IllegalStateException("Failed to read or parse products from file: " + DEFAULT_FILE_PATH, e);
+        try {
+            String jsonContent = fileReaderService.readJsonFile("src/main/resources/products.json");
+            return objectMapper.readValue(jsonContent, new TypeReference<List<Product>>() {});
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to read or parse products", e);
         }
-    }
+    }    
 }

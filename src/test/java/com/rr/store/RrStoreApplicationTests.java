@@ -1,7 +1,9 @@
 package com.rr.store;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,12 +11,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for the RR Store application.
  * 
- * Validates that the application context loads successfully and basic
- * application-level configurations are correct.
+ * Validates that the application context loads successfully and 
+ * basic application-level configurations are correct.
  */
 @SpringBootTest(classes = {RrStoreApplication.class})
-@ActiveProfiles("test") // Ensures the "test" profile is active during the tests
+@ActiveProfiles("test") // Ensures the "test" profile is active during tests
 public class RrStoreApplicationTests {
+
+    @Autowired
+    private Environment environment; // Inject Spring Environment
 
     /**
      * Ensures the Spring application context loads without errors.
@@ -26,13 +31,12 @@ public class RrStoreApplicationTests {
     }
 
     /**
-     * Placeholder for additional application-level tests.
-     * 
-     * Example: Testing environment-specific properties or other high-level configurations.
+     * Validates that the "test" profile is active during the tests.
      */
     @Test
     void applicationStartsUpCorrectly() {
-        // Add any additional startup-related checks here
-        assertThat(System.getProperty("spring.profiles.active")).isEqualTo("test");
+        // Validate that the active profile is "test"
+        String[] activeProfiles = environment.getActiveProfiles();
+        assertThat(activeProfiles).contains("test");
     }
 }

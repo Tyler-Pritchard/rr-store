@@ -19,5 +19,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
      * @param id the ID of the cart to find
      * @return the cart with the given ID, or null if not found
      */
-    Cart findByIdWithItems(Long id);
+    default Cart findByIdWithItems(Long id) {
+        throw new UnsupportedOperationException("This feature is not yet implemented.");
+    }    
 }

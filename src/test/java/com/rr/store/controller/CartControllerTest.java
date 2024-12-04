@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.rr.store.domain.model.Cart;
 import com.rr.store.domain.model.Product;
+import com.rr.store.domain.service.CartService;
 import com.rr.store.infrastructure.repository.CartRepository;
 import com.rr.store.infrastructure.repository.ProductRepository;
 
@@ -22,12 +23,15 @@ import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Unit tests for the CartController.
- * 
+ *
  * Validates the behavior of CartController endpoints, including adding items,
  * retrieving the cart, and handling invalid inputs.
  */
 @WebMvcTest(CartController.class)
 public class CartControllerTest {
+
+    @MockBean
+    private CartService cartService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,9 +45,6 @@ public class CartControllerTest {
     private Cart cart;
     private Product product;
 
-    /**
-     * Sets up mock data for testing.
-     */
     @BeforeEach
     public void setup() {
         cart = new Cart();
@@ -53,11 +54,6 @@ public class CartControllerTest {
         product.setPrice(9.99);
     }
 
-    /**
-     * Tests the retrieval of an empty cart.
-     * 
-     * Ensures that the cart is returned as empty when no items are present.
-     */
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     public void testGetCart() throws Exception {
@@ -69,11 +65,6 @@ public class CartControllerTest {
                .andExpect(jsonPath("$.items").isEmpty());
     }
 
-    /**
-     * Tests adding a valid item to the cart.
-     * 
-     * Ensures that the item is added successfully and the endpoint returns OK.
-     */
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     public void testAddItemToCart() throws Exception {
@@ -81,40 +72,30 @@ public class CartControllerTest {
         when(cartRepository.findById(anyLong())).thenReturn(java.util.Optional.of(cart));
 
         mockMvc.perform(post("/api/cart/1")
-                .with(csrf()) // Include CSRF token
-                .param("quantity", "2") // Add quantity parameter
+                .with(csrf())
+                .param("quantity", "2")
                 .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.items").isArray());
     }
 
-    /**
-     * Tests adding an item with invalid quantity.
-     * 
-     * Ensures that a bad request status is returned when the quantity is invalid.
-     */
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     public void testAddItemToCartInvalidQuantity() throws Exception {
         mockMvc.perform(post("/api/cart/1")
-                .with(csrf()) // Include CSRF token
-                .param("quantity", "-1") // Invalid quantity
+                .with(csrf())
+                .param("quantity", "-1")
                 .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isBadRequest());
     }
 
-    /**
-     * Tests adding an item with a non-existent product ID.
-     * 
-     * Ensures that a bad request status is returned when the product ID is invalid.
-     */
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     public void testAddItemToCartNonExistentProduct() throws Exception {
         when(productRepository.findById(1L)).thenReturn(java.util.Optional.empty());
 
         mockMvc.perform(post("/api/cart/1")
-                .with(csrf()) // Include CSRF token
+                .with(csrf())
                 .param("quantity", "1")
                 .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isBadRequest());

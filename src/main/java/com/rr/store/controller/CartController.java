@@ -1,6 +1,7 @@
 package com.rr.store.controller;
 
 import com.rr.store.domain.model.Cart;
+import com.rr.store.domain.model.CartItem;
 import com.rr.store.domain.service.CartService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
@@ -89,4 +90,5 @@ public class CartController {
         Cart cart = cartService.clearCart(session);
         return ResponseEntity.ok(cart);
     }
+
 }

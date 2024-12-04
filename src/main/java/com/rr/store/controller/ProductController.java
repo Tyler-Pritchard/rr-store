@@ -4,6 +4,8 @@ import com.rr.store.domain.model.Product;
 import com.rr.store.domain.service.ProductService;
 import com.rr.store.exception.ResourceNotFoundException;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
     private final ProductService productService;
 
     /**
@@ -36,11 +40,17 @@ public class ProductController {
     /**
      * Retrieves all available products.
      * 
-     * @return a list of all products
+     * @return a list of all products, or 204 No Content if none are found
      */
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
+        logger.debug("Received request to retrieve all products.");
         List<Product> products = productService.findAllProducts();
+        if (products.isEmpty()) {
+            logger.info("No products found in the database.");
+            return ResponseEntity.noContent().build();
+        }
+        logger.info("Retrieved {} products.", products.size());
         return ResponseEntity.ok(products);
     }
 
@@ -53,8 +63,10 @@ public class ProductController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        logger.debug("Received request to retrieve product with ID: {}", id);
         Product product = productService.findProductById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+        logger.info("Retrieved product with ID: {}", id);
         return ResponseEntity.ok(product);
     }
 
@@ -69,10 +81,12 @@ public class ProductController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product,
                                                  UriComponentsBuilder uriComponentsBuilder) {
+        logger.debug("Received request to create a new product: {}", product);
         Product savedProduct = productService.createProduct(product);
         URI location = uriComponentsBuilder.path("/api/products/{id}")
                                            .buildAndExpand(savedProduct.getId())
                                            .toUri();
+        logger.info("Product created with ID: {}", savedProduct.getId());
         return ResponseEntity.created(location).body(savedProduct);
     }
 
@@ -87,7 +101,9 @@ public class ProductController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody Product productDetails) {
+        logger.debug("Received request to update product with ID: {}", id);
         Product updatedProduct = productService.updateProduct(id, productDetails);
+        logger.info("Product updated with ID: {}", id);
         return ResponseEntity.ok(updatedProduct);
     }
 
@@ -101,7 +117,9 @@ public class ProductController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        logger.debug("Received request to delete product with ID: {}", id);
         productService.deleteProduct(id);
+        logger.info("Product deleted with ID: {}", id);
         return ResponseEntity.noContent().build();
     }
 }
