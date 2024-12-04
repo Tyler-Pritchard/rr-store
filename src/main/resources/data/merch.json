@@ -118,5 +118,53 @@
         "stock": 100,
         "category": "Accessories",
         "imageUrl": "https://i.imgur.com/Cesjf9v.jpg"
+    },
+    {
+        "name": "Folk Punk Vinyl Album",
+        "description": "A 180-gram black vinyl record of Rob Rich’s latest hypothetical album, 'Northwest Shadows,' featuring exclusive liner notes and artwork.",
+        "price": 35.00,
+        "stock": 50,
+        "category": "Media",
+        "imageUrl": "https://i.imgur.com/FpQ1ICQ.jpeg"
+    },
+    {
+        "name": "Limited-Edition CD Box Set",
+        "description": "A collector's CD box set of Rob Rich’s previous hypothetical albums with exclusive packaging and bonus tracks.",
+        "price": 50.00,
+        "stock": 30,
+        "category": "Media",
+        "imageUrl": "https://i.imgur.com/cTgOfnV.jpeg"
+    },
+    {
+        "name": "Dark Americana Art Print",
+        "description": "An exclusive art print capturing Rob Rich’s dark Americana aesthetic with haunting landscapes and native animals.",
+        "price": 45.00,
+        "stock": 20,
+        "category": "Limited Edition",
+        "imageUrl": "https://i.imgur.com/1CaaUmE.jpeg"
+    },
+    {
+        "name": "Vintage Tour Poster A",
+        "description": "A retro-style poster commemorating Rob Rich’s fictional 'Shadowed Pines Tour,' featuring dates and locations.",
+        "price": 15.00,
+        "stock": 100,
+        "category": "Event",
+        "imageUrl": "https://i.imgur.com/GwACRQB.jpeg"
+    },
+    {
+        "name": "Vintage Tour Poster B",
+        "description": "A retro-style poster commemorating Rob Rich’s fictional 'Shadowed Pines Tour,' featuring dates and locations.",
+        "price": 15.00,
+        "stock": 100,
+        "category": "Event",
+        "imageUrl": "https://i.imgur.com/DTXDfYQ.jpeg"
+    },
+    {
+        "name": "Tour Lanyard and Pass",
+        "description": "A vintage-style lanyard and faux backstage pass for Rob Rich’s hypothetical 'Shadowed Pines Tour.'",
+        "price": 12.00,
+        "stock": 200,
+        "category": "Event",
+        "imageUrl": "https://i.imgur.com/QaZhXpH.jpeg"
     }
 ]
