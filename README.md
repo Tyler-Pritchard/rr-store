@@ -4,6 +4,9 @@
 
 The E-Store Microservice is a backend service engineered for enterprise-grade e-commerce platforms. It facilitates efficient product catalog management, leveraging Spring Boot to provide robust, secure, and scalable RESTful APIs. The service adheres to modern microservice architecture principles, ensuring high maintainability and performance.
 
+![Products](/misc/Screen%20Shot%202024-12-04%20at%201.22.30%20AM.png)
+![Product](/misc/Screen%20Shot%202024-12-04%20at%201.23.16%20AM.png)
+
 ## Features
 
 ### Core Capabilities
