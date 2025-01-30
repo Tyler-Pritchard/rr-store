@@ -149,3 +149,21 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) fi
 ## Contact and Support
 
 For questions or support, contact pritchard.tyler@gmail.com.
+
+
+Your Spring Boot application should be able to switch between local and production databases automatically.
+
+The best approach is to use SPRING_PROFILES_ACTIVE to define dev and prod profiles.
+
+✅ Solution: Modify secrets.env to select the correct profile:
+
+env
+Copy
+Edit
+SPRING_PROFILES_ACTIVE=dev
+This ensures your application loads application-dev.properties (for local).
+When deploying to Railway.io, set:
+env
+Copy
+Edit
+SPRING_PROFILES_ACTIVE=prod

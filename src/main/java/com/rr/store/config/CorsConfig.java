@@ -14,9 +14,9 @@ public class CorsConfig {
         "https://www.robrich.band",
         "https://rr-auth-production.up.railway.app",
         "https://rr-store-production.up.railway.app",
-        "http://localhost:3000",
-        "http://localhost:8080"
-    };
+        "http://host.docker.internal:3000",
+        "http://host.docker.internal:8080"
+    };    
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

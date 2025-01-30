@@ -58,6 +58,7 @@ Desktop.ini
 # Environment
 .env
 src/main/resources/application-dev.properties
+secrets.env
 
 # H2 Database
 *.db
