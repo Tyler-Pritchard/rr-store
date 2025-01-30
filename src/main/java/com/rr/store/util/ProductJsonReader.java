@@ -3,7 +3,6 @@ package com.rr.store.util;
 import com.rr.store.domain.model.Product;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ public class ProductJsonReader {
     private final ObjectMapper objectMapper;
     private final FileReaderService fileReaderService;
 
-    @Autowired
     public ProductJsonReader(ObjectMapper objectMapper, FileReaderService fileReaderService) {
         this.objectMapper = objectMapper;
         this.fileReaderService = fileReaderService;

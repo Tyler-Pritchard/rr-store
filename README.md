@@ -39,12 +39,12 @@ The E-Store Microservice is a backend service engineered for enterprise-grade e-
 **Base URL**: ``http://localhost:8080/api/products``
 
 ### Endpoints
-HTTP Method	| Endpoint	| Description	| Authentication	| Example Status
-- GET	``/api/products``	Fetch all products	Public	``200 OK``
-- POST	``/api/products``	Create a new product	Admin	``201 Created``
-- GET	``/api/products/{id}``	Fetch a product by ID	Public	``200 OK``
-- PUT	``/api/products/{id}``	Update an existing product by ID	Admin	``200 OK``
-- DELETE	``/api/products/{id}``	Delete a product by ID	Admin	``204 No Content``
+HTTP Method | Endpoint | Description | Authentication | Example Status
+- GET ``/api/products`` Fetch all products Public ``200 OK``
+- POST ``/api/products`` Create a new product Admin ``201 Created``
+- GET ``/api/products/{id}`` Fetch a product by ID Public ``200 OK``
+- PUT ``/api/products/{id}`` Update an existing product by ID Admin ``200 OK``
+- DELETE ``/api/products/{id}`` Delete a product by ID Admin ``204 No Content``
 
 For detailed request/response payloads, see the [API Reference](#api-documentation).
 
@@ -81,7 +81,7 @@ git clone https://github.com/username/e-store-microservice.git
 cd e-store-microservice
 ```
 
-1. **Run the Application:**
+2. **Run the Application:**
 
 - Use the development profile:
 ```
@@ -113,11 +113,54 @@ java -jar target/rr-store-0.0.1-SNAPSHOT.jar
 
 ### Docker Deployment
 
-- Sample ``Dockerfile``:
+#### Running E-Store Microservice with Docker
+
+The E-Store Microservice can be containerized and run using Docker, ensuring a consistent environment for development and deployment.
+
+#### Prerequisites
+- Install Docker on your system
+- Ensure PostgreSQL is set up in a Docker network
+
+#### Building the Docker Image
+To build the Docker image, run:
 ```
-FROM openjdk:17-jdk-slim
-COPY target/rr-store-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+docker build -t rr-store .
+```
+
+#### Running the Docker Container
+To start the container:
+```
+docker run -d --name rr-store \
+  --network shared_network \
+  -p 8080:8080 \
+  -e SPRING_PROFILES_ACTIVE=dev \
+  -e DB_HOST=postgres-db \
+  -e DB_USERNAME=postgres \
+  -e DB_PASSWORD=your_secure_password \
+  rr-store
+```
+
+#### Running with Docker Compose
+Alternatively, use Docker Compose to manage dependencies:
+
+1. Ensure ``docker-compose.yml`` is correctly configured.
+2. Run the following command:
+```
+docker-compose up -d --build
+```
+
+#### Stopping and Restarting
+To stop the container:
+```
+docker stop rr-store
+```
+To restart the container:
+```
+docker start rr-store
+```
+To remove the container:
+```
+docker rm -f rr-store
 ```
 
 ## Testing
@@ -150,20 +193,16 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) fi
 
 For questions or support, contact pritchard.tyler@gmail.com.
 
-
 Your Spring Boot application should be able to switch between local and production databases automatically.
 
 The best approach is to use SPRING_PROFILES_ACTIVE to define dev and prod profiles.
 
 ✅ Solution: Modify secrets.env to select the correct profile:
-
-env
-Copy
-Edit
+```
 SPRING_PROFILES_ACTIVE=dev
+```
 This ensures your application loads application-dev.properties (for local).
 When deploying to Railway.io, set:
-env
-Copy
-Edit
+```
 SPRING_PROFILES_ACTIVE=prod
+```
