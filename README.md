@@ -193,6 +193,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) fi
 
 For questions or support, contact pritchard.tyler@gmail.com.
 
+
+
+Notes on branch deployments(issue to be resolved):
 Your Spring Boot application should be able to switch between local and production databases automatically.
 
 The best approach is to use SPRING_PROFILES_ACTIVE to define dev and prod profiles.
