@@ -8,7 +8,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://postgres-db:5432/dev_database
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:your_secure_password}  # Ensure it matches secrets.env
+    password: ${DB_PASSWORD:your_secure_password}
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,6 +16,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform  # Disable JTA
 
 server:
   port: 8080
@@ -31,7 +34,7 @@ spring:
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:dev_database}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:your_password}  # Ensure this matches .env
+    password: ${DB_PASSWORD:your_password}
   jpa:
     hibernate:
       ddl-auto: update
@@ -39,6 +42,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform  # Disable JTA for dev
 
 logging:
   level:
@@ -56,11 +62,16 @@ spring:
   datasource:
     url: jdbc:postgresql://${DB_HOST:postgres-db}:${DB_PORT:5432}/${DB_NAME:prod_database}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:your_secure_password}  # Matches secrets.env
+    password: ${DB_PASSWORD:your_secure_password}
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: false
+    properties:
+      hibernate:
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform  # Optional: Add for prod if JTA isn't used
 
 logging:
   level:
@@ -87,6 +98,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform  # Disable JTA for tests
 
 logging:
   level:

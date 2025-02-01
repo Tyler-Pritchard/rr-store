@@ -14,7 +14,6 @@ spec:
       labels:
         app: rr-store
       annotations:
-        # These annotations allow Prometheus to scrape metrics from your service.
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
     spec:
@@ -24,7 +23,9 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 8080
-        # Health checks using Spring Boot’s Actuator endpoints.
+        envFrom:
+          - secretRef:
+              name: rr-store-secret  # Correctly referenced secret
         readinessProbe:
           httpGet:
             path: /actuator/health
