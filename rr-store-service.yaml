@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rr-store
+  labels:
+    app: rr-store
+spec:
+  selector:
+    app: rr-store
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080       # Exposed port within the cluster
+    targetPort: 8080  # Container’s port
+  type: ClusterIP
