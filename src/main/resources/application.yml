@@ -18,10 +18,11 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         transaction:
           jta:
-            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform  # Disable JTA
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
 
 server:
   port: 8080
+  address: 0.0.0.0
 
 # ==================================================
 # Development Profile
@@ -32,7 +33,7 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:dev_database}
+    url: jdbc:postgresql://postgres-db:5432/dev_database
     username: ${DB_USER:postgres}
     password: ${DB_PASSWORD:your_password}
   jpa:
@@ -44,12 +45,33 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         transaction:
           jta:
-            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform  # Disable JTA for dev
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  server:
+    port: 8080  # Ensure management endpoints run on the same port as the app
 
 logging:
   level:
     root: DEBUG
-    "[com.rr.store]": INFO
+    '[org.springframework.boot.actuate.endpoint.web]': DEBUG
+    '[io.micrometer]': DEBUG
+    '[com.rr.store]': INFO
 
 # ==================================================
 # Production Profile
@@ -71,7 +93,26 @@ spring:
       hibernate:
         transaction:
           jta:
-            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform  # Optional: Add for prod if JTA isn't used
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  server:
+    port: 8080
 
 logging:
   level:
@@ -100,20 +141,29 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         transaction:
           jta:
-            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform  # Disable JTA for tests
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
 
-logging:
-  level:
-    root: DEBUG
-
-# ==================================================
-# Actuator Configuration
-# ==================================================
 management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: "*"
   endpoint:
     health:
       show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  server:
+    port: 8080
+
+logging:
+  level:
+    root: DEBUG
+    '[org.springframework.boot.actuate.endpoint.web]': DEBUG
+    '[io.micrometer]': DEBUG

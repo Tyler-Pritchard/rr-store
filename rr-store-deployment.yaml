@@ -26,18 +26,6 @@ spec:
         envFrom:
           - secretRef:
               name: rr-store-secret  # Correctly referenced secret
-        readinessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 20
-        livenessProbe:
-          httpGet:
-            path: /actuator/health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 30
         resources:
           requests:
             cpu: "250m"
