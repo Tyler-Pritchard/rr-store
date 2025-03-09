@@ -56,9 +56,9 @@ management:
     health:
       show-details: always
     metrics:
-      enabled: true
+      access: UNRESTRICTED
     prometheus:
-      enabled: true
+      access: UNRESTRICTED
   prometheus:
     metrics:
       export:
@@ -104,9 +104,9 @@ management:
     health:
       show-details: always
     metrics:
-      enabled: true
+      access: UNRESTRICTED
     prometheus:
-      enabled: true
+      access: UNRESTRICTED
   prometheus:
     metrics:
       export:
@@ -152,9 +152,9 @@ management:
     health:
       show-details: always
     metrics:
-      enabled: true
+      access: UNRESTRICTED
     prometheus:
-      enabled: true
+      access: UNRESTRICTED
   prometheus:
     metrics:
       export:

@@ -16,10 +16,10 @@ public class CorsConfig {
         "https://rr-store-production.up.railway.app",
         "http://host.docker.internal:3000",
         "http://host.docker.internal:8080"
-    };    
+    };
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
+    WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {

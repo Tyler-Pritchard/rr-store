@@ -21,7 +21,7 @@ public class SecurityConfigTestStub {
      * @return a dummy string
      */
     @Bean
-    public String dummyBean() {
+    String dummyBean() {
         return "dummy";
     }
 }

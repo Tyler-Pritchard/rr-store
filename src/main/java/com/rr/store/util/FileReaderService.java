@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 
 /**
  * A utility service for reading files as strings.
@@ -20,6 +20,6 @@ public class FileReaderService {
      * @throws IOException if an error occurs while reading the file
      */
     public String readJsonFile(String filePath) throws IOException {
-        return Files.readString(Paths.get(filePath));
+        return Files.readString(Path.of(filePath));
     }
 }
