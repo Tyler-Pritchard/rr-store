@@ -2,11 +2,10 @@
 
 ## Overview
 
-The E-Store Microservice is a backend service engineered for enterprise-grade e-commerce platforms. It facilitates efficient product catalog management, leveraging Spring Boot to provide robust, secure, and scalable RESTful APIs. The service adheres to modern microservice architecture principles, ensuring high maintainability and performance.
+The E-Store Microservice is a backend service engineered for enterprise-grade e-commerce platforms. It facilitates efficient product catalog management, leveraging Spring Boot to provide robust, secure, and scalable RESTful APIs. The service adheres to modern microservice architecture principles, ensuring high maintainability and performance. It is containerized for portability and deployed via Docker and Kubernetes, with full observability provided through Prometheus and Grafana.
 
-![Products](/misc/Screen%20Shot%202024-12-04%20at%201.22.30%20AM.png)
-![Product](/misc/Screen%20Shot%202024-12-04%20at%201.23.16%20AM.png)
-
+![Products](./misc/Screen%20Shot%202024-12-04%20at%201.22.30%20AM.png)
+![Product](./misc/Screen%20Shot%202024-12-04%20at%201.23.16%20AM.png)
 ## Features
 
 ### Core Capabilities
@@ -20,9 +19,9 @@ The E-Store Microservice is a backend service engineered for enterprise-grade e-
 
 ### Design Principles
 
-- **Scalability**: Built with a microservice-first approach to support horizontal scaling.
-- **Testability**: Comprehensive unit and integration test coverage with JUnit and Mockito.
-- **Performance**: Optimized queries and database interactions with Hibernate.
+- **Scalability**: Designed with a microservice-first architecture to support horizontal scaling and service independence.
+- **Testability**: High test coverage enabled by modular code structure, unit tests (JUnit 5), and integration tests with Mockito.
+- **Performance**: Efficient database interactions using Hibernate ORM with tuned entity relationships and query execution.
 
 ## Technology Stack
 - **Framework**: Spring Boot (v3.3.6)
@@ -161,6 +160,66 @@ docker start rr-store
 To remove the container:
 ```
 docker rm -f rr-store
+```
+
+## Kubernetes Deployment
+
+This service is production-ready and optimized for deployment in containerized environments using Kubernetes. The deployment architecture supports scalability, resilience, and full-stack observability through Prometheus and Grafana.
+
+### Prerequisites
+- Minikube or Kubernetes cluster
+- Docker installed and configured
+- Helm (for Prometheus/Grafana setup)
+
+### Step-by-Step Deployment
+
+1. **Start Minikube and Enable Add-ons:**
+   ```bash
+   minikube start
+   minikube addons enable ingress
+   minikube addons enable metrics-server
+   ```
+
+2. **Build Docker Image Locally (Optional for Minikube):**
+   ```bash
+   eval $(minikube docker-env)
+   docker build -t rr-store:latest ./rr-store
+   ```
+
+3. **Apply Kubernetes Manifests:**
+   ```bash
+   kubectl apply -f rr-store/postgres-deployment.yaml
+   kubectl apply -f rr-store/rr-store-deployment.yaml
+   kubectl apply -f rr-store/rr-store-service.yaml
+   ```
+
+4. **Monitor Deployment Status:**
+   ```bash
+   kubectl get pods -A
+   kubectl get deployments -A
+   kubectl get svc -A
+   ```
+
+5. **Restart the Deployment (if needed):**
+   ```bash
+   kubectl rollout restart deployment rr-store
+   ```
+
+### Observability Integration
+
+The deployment is annotated for Prometheus metrics scraping via `/actuator/prometheus`, and exposes health endpoints at `/actuator/health`. You can visualize metrics using a Grafana dashboard.
+
+To install Prometheus and Grafana via Helm:
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
+```
+
+To port-forward the Prometheus and Grafana dashboards:
+```bash
+kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9090
+kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80
 ```
 
 ## Testing
