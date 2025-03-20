@@ -222,6 +222,14 @@ kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 909
 kubectl port-forward -n monitoring svc/prometheus-grafana 3000:80
 ```
 
+### Verify Prometheus Metrics Endpoint
+Once deployed, confirm `/actuator/prometheus` is reachable and serving metrics:
+
+`curl http://<pod-ip>:8080/actuator/prometheus`
+
+Or check Prometheus targets via http://localhost:9090/targets.
+
+
 ## Testing
 
 ### Test Coverage
