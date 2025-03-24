@@ -29,6 +29,7 @@ public class TestSecurityConfig {
             .csrf(csrf -> csrf.disable())  
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
+                    "/api/**",
                     "/actuator/**",    
                     "/metrics",        
                     "/prometheus",     
