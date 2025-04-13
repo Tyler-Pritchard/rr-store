@@ -84,9 +84,10 @@ cd e-store-microservice
 
 - Use the development profile:
 ```
-./mvnw spring-boot:run
--Dspring-boot.run.profiles=dev
--Dspring-boot.run.mainClass=com.rr.store.RrStoreApplication
+./mvnw spring-boot:run \
+  -Dspring-boot.run.profiles=dev \
+  -Dspring-boot.run.mainClass=com.rr.store.RrStoreApplication
+
 ```
 
 3. **Access the API**:
